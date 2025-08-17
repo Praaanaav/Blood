@@ -4,8 +4,6 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Home, Droplets } from "lucide-react";
-import { Bar, BarChart, CartesianGrid, XAxis, YAxis, ResponsiveContainer, Tooltip, Legend } from "recharts";
-import { ChartTooltipContent } from "@/components/ui/chart";
 
 const bloodGroups = [
   { group: "A+", units: 45 },
@@ -18,18 +16,9 @@ const bloodGroups = [
   { group: "O-", units: 18 },
 ];
 
-const forecastData = [
-    { month: "July", demand: 120 },
-    { month: "Aug", demand: 150 },
-    { month: "Sep", demand: 170 },
-    { month: "Oct", demand: 160 },
-    { month: "Nov", demand: 190 },
-    { month: "Dec", demand: 210 },
-]
-
 export default function DashboardPage() {
   return (
-    <div className="flex flex-col min-h-screen bg-background">
+    <div className="flex flex-col flex-grow bg-background">
       <div className="flex-grow p-4 md:p-8">
         <div className="w-full max-w-7xl mx-auto">
           <div className="flex justify-between items-center mb-6">
@@ -70,34 +59,6 @@ export default function DashboardPage() {
                   </Card>
               </section>
           </div>
-
-
-          <section className="mt-8">
-              <Card>
-                  <CardHeader>
-                      <CardTitle>6-Month Demand Forecast</CardTitle>
-                      <CardDescription>Projected blood demand for the upcoming months.</CardDescription>
-                  </CardHeader>
-                  <CardContent>
-                      <div className="h-[400px]">
-                          <ResponsiveContainer width="100%" height="100%">
-                              <BarChart data={forecastData}>
-                                  <CartesianGrid strokeDasharray="3 3" vertical={false} />
-                                  <XAxis dataKey="month" tickLine={false} axisLine={false} />
-                                  <YAxis tickLine={false} axisLine={false} />
-                                  <Tooltip
-                                      cursor={{ fill: 'hsl(var(--accent))' }}
-                                      content={<ChartTooltipContent />}
-                                  />
-                                  <Legend />
-                                  <Bar dataKey="demand" fill="hsl(var(--primary))" radius={[4, 4, 0, 0]} />
-                              </BarChart>
-                          </ResponsiveContainer>
-                      </div>
-                  </CardContent>
-              </Card>
-          </section>
-
         </div>
       </div>
     </div>
