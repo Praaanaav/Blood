@@ -46,7 +46,7 @@ export default function Header() {
                   <DropdownMenuSubTrigger>Login</DropdownMenuSubTrigger>
                   <DropdownMenuPortal>
                     <DropdownMenuSubContent>
-                      <DropdownMenuItem asChild><Link href="/login/admin">Administrator</Link></DropdownMenuItem>
+                      <DropdownMenuItem asChild><Link href="/dashboard">Administrator</Link></DropdownMenuItem>
                       <DropdownMenuItem asChild><Link href="/login/donor">Donor</Link></DropdownMenuItem>
                       <DropdownMenuItem asChild><Link href="/login/patient">Patient</Link></DropdownMenuItem>
                     </DropdownMenuSubContent>
@@ -75,7 +75,7 @@ export default function Header() {
                 <DropdownMenuItem asChild><Link href="/#features">Features</Link></DropdownMenuItem>
                 <DropdownMenuItem asChild><Link href="/#testimonials">Testimonials</Link></DropdownMenuItem>
                 <DropdownMenuSeparator />
-                <DropdownMenuItem asChild><Link href="/login/admin">Admin Login</Link></DropdownMenuItem>
+                <DropdownMenuItem asChild><Link href="/dashboard">Admin Dashboard</Link></DropdownMenuItem>
                 <DropdownMenuItem asChild><Link href="/login/donor">Donor Login</Link></DropdownMenuItem>
                 <DropdownMenuItem asChild><Link href="/login/patient">Patient Login</Link></DropdownMenuItem>
                 <DropdownMenuSeparator />
