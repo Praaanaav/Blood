@@ -19,6 +19,12 @@ const BloodDemandForecastInputSchema = z.object({
 });
 export type BloodDemandForecastInput = z.infer<typeof BloodDemandForecastInputSchema>;
 
+const ForecastDataItemSchema = z.object({
+    name: z.string().describe('The name of the blood type (e.g., A+, O-, B+).'),
+    demand: z.number().describe('The forecasted demand for this blood type in units.'),
+    seasonalDemand: z.number().describe('The forecasted seasonal demand for this blood type in units.'),
+  });
+  
 const BloodDemandForecastOutputSchema = z.object({
   forecastSummary: z
     .string()
@@ -26,6 +32,8 @@ const BloodDemandForecastOutputSchema = z.object({
   forecastDetails: z
     .string()
     .describe('Detailed information about the blood demand forecast, including specific blood types and quantities needed.'),
+  alerts: z.array(z.string()).describe('A list of alerts for potential shortages.'),
+  forecastData: z.array(ForecastDataItemSchema).describe('An array of forecast data points for the chart.'),
 });
 export type BloodDemandForecastOutput = z.infer<typeof BloodDemandForecastOutputSchema>;
 
@@ -44,7 +52,12 @@ const prompt = ai.definePrompt({
   Time Period: {{{timePeriod}}}
   Location: {{{location}}}
 
-  Provide a summary of the forecast and detailed information, including specific blood types and quantities needed.
+  Provide:
+  1. A summary of the forecast.
+  2. Detailed information, including specific blood types and quantities needed.
+  3. A list of alerts for any potential shortages (e.g., "Critical shortage of O- expected").
+  4. Structured forecast data for a chart. Include demand and seasonal demand for major blood types (A+, A-, B+, B-, AB+, AB-, O+, O-).
+  
   Ensure the forecast is accurate and actionable for blood bank management.
   Response should be in simple English.
   `,
