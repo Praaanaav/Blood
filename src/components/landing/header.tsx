@@ -2,7 +2,7 @@
 'use client';
 
 import { Button } from "@/components/ui/button";
-import { HeartPulse, LogIn, LogOut, User, Shield, Stethoscope, HandHeart, UserPlus, Menu } from "lucide-react";
+import { HeartPulse, LogOut, Shield, Stethoscope, HandHeart, Menu, User } from "lucide-react";
 import Link from "next/link";
 import {
   DropdownMenu,
@@ -18,16 +18,12 @@ import React, { useState } from "react";
 export default function Header() {
   const [loggedInUser, setLoggedInUser] = useState<string | null>(null);
 
-  const handleLogin = (role: string) => {
-    setLoggedInUser(role);
-  };
-
   const handleLogout = () => {
     setLoggedInUser(null);
   };
 
   const UserAvatar = () => {
-    if (!loggedInUser) return <User />;
+    if (!loggedInUser) return <User className="h-5 w-5" />;
     if (loggedInUser === 'admin') return <Shield />;
     if (loggedInUser === 'patient') return <Stethoscope />;
     if (loggedInUser === 'donor') return <HandHeart />;
@@ -44,11 +40,11 @@ export default function Header() {
           </Link>
         </div>
         <nav className="hidden items-center space-x-6 text-sm font-medium md:flex">
-            <Link href="#features" className="transition-colors hover:text-foreground/80 text-foreground/60">Features</Link>
-            <Link href="#forecasting" className="transition-colors hover:text-foreground/80 text-foreground/60">Forecasting</Link>
-            <Link href="#pricing" className="transition-colors hover:text-foreground/80 text-foreground/60">Pricing</Link>
-            <Link href="#testimonials" className="transition-colors hover:text-foreground/80 text-foreground/60">Testimonials</Link>
-            <Link href="#cta" className="transition-colors hover:text-foreground/80 text-foreground/60">Contact</Link>
+            <Link href="/#features" className="transition-colors hover:text-foreground/80 text-foreground/60">Features</Link>
+            <Link href="/#forecasting" className="transition-colors hover:text-foreground/80 text-foreground/60">Forecasting</Link>
+            <Link href="/#pricing" className="transition-colors hover:text-foreground/80 text-foreground/60">Pricing</Link>
+            <Link href="/#testimonials" className="transition-colors hover:text-foreground/80 text-foreground/60">Testimonials</Link>
+            <Link href="/#cta" className="transition-colors hover:text-foreground/80 text-foreground/60">Contact</Link>
         </nav>
         <div className="flex flex-1 items-center justify-end space-x-4">
           <DropdownMenu>
@@ -73,27 +69,37 @@ export default function Header() {
               ) : (
                 <>
                   <DropdownMenuLabel>Login As</DropdownMenuLabel>
-                  <DropdownMenuItem onClick={() => handleLogin('admin')}>
-                    <Shield className="mr-2 h-4 w-4" />
-                    <span>Administrator</span>
+                  <DropdownMenuItem asChild>
+                    <Link href="/login/admin">
+                      <Shield className="mr-2 h-4 w-4" />
+                      <span>Administrator</span>
+                    </Link>
                   </DropdownMenuItem>
-                  <DropdownMenuItem onClick={() => handleLogin('patient')}>
-                    <Stethoscope className="mr-2 h-4 w-4" />
-                    <span>Patient</span>
+                  <DropdownMenuItem asChild>
+                    <Link href="/login/patient">
+                      <Stethoscope className="mr-2 h-4 w-4" />
+                      <span>Patient</span>
+                    </Link>
                   </DropdownMenuItem>
-                  <DropdownMenuItem onClick={() => handleLogin('donor')}>
-                    <HandHeart className="mr-2 h-4 w-4" />
-                    <span>Donor</span>
+                  <DropdownMenuItem asChild>
+                    <Link href="/login/donor">
+                      <HandHeart className="mr-2 h-4 w-4" />
+                      <span>Donor</span>
+                    </Link>
                   </DropdownMenuItem>
                   <DropdownMenuSeparator />
                   <DropdownMenuLabel>Register</DropdownMenuLabel>
-                   <DropdownMenuItem>
-                      <HandHeart className="mr-2 h-4 w-4" />
-                      <span>Register as Donor</span>
+                   <DropdownMenuItem asChild>
+                      <Link href="/register/donor">
+                        <HandHeart className="mr-2 h-4 w-4" />
+                        <span>Register as Donor</span>
+                      </Link>
                   </DropdownMenuItem>
-                  <DropdownMenuItem>
-                      <Stethoscope className="mr-2 h-4 w-4" />
-                      <span>Register as Patient</span>
+                  <DropdownMenuItem asChild>
+                      <Link href="/register/patient">
+                        <Stethoscope className="mr-2 h-4 w-4" />
+                        <span>Register as Patient</span>
+                      </Link>
                   </DropdownMenuItem>
                 </>
               )}
@@ -107,11 +113,11 @@ export default function Header() {
                 </Button>
               </DropdownMenuTrigger>
               <DropdownMenuContent align="end">
-                <DropdownMenuItem asChild><Link href="#features">Features</Link></DropdownMenuItem>
-                <DropdownMenuItem asChild><Link href="#forecasting">Forecasting</Link></DropdownMenuItem>
-                <DropdownMenuItem asChild><Link href="#pricing">Pricing</Link></DropdownMenuItem>
-                <DropdownMenuItem asChild><Link href="#testimonials">Testimonials</Link></DropdownMenuItem>
-                <DropdownMenuItem asChild><Link href="#cta">Contact</Link></DropdownMenuItem>
+                <DropdownMenuItem asChild><Link href="/#features">Features</Link></DropdownMenuItem>
+                <DropdownMenuItem asChild><Link href="/#forecasting">Forecasting</Link></DropdownMenuItem>
+                <DropdownMenuItem asChild><Link href="/#pricing">Pricing</Link></DropdownMenuItem>
+                <DropdownMenuItem asChild><Link href="/#testimonials">Testimonials</Link></DropdownMenuItem>
+                <DropdownMenuItem asChild><Link href="/#cta">Contact</Link></DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
           </div>
