@@ -1,16 +1,42 @@
+'use client';
+
 import { Button } from "@/components/ui/button";
-import { HeartPulse } from "lucide-react";
+import { HeartPulse, LogOut, User, Shield, Stethoscope, HandHeart } from "lucide-react";
 import Link from "next/link";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
+  DropdownMenuSeparator,
+  DropdownMenuSub,
+  DropdownMenuSubTrigger,
+  DropdownMenuSubContent,
+  DropdownMenuPortal,
 } from "@/components/ui/dropdown-menu"
 import { Menu } from "lucide-react";
+import React, { useState } from "react";
 
 
 export default function Header() {
+  const [loggedInUser, setLoggedInUser] = useState<string | null>(null);
+
+  const handleLogin = (role: string) => {
+    setLoggedInUser(role);
+  };
+
+  const handleLogout = () => {
+    setLoggedInUser(null);
+  };
+
+  const UserAvatar = () => {
+    if (!loggedInUser) return <User />;
+    if (loggedInUser === 'admin') return <Shield />;
+    if (loggedInUser === 'patient') return <Stethoscope />;
+    if (loggedInUser === 'donor') return <HandHeart />;
+    return <User/>
+  }
+
   return (
     <header className="sticky top-0 z-50 w-full border-b border-border/40 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
       <div className="container flex h-14 max-w-screen-2xl items-center">
@@ -28,7 +54,50 @@ export default function Header() {
             <Link href="#cta" className="transition-colors hover:text-foreground/80 text-foreground/60">Contact</Link>
         </nav>
         <div className="flex flex-1 items-center justify-end space-x-4">
-          <Button>Request a Demo</Button>
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button variant="secondary" size="icon" className="rounded-full">
+                <UserAvatar />
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end">
+              {loggedInUser ? (
+                <>
+                  <DropdownMenuItem disabled>
+                    Logged in as {loggedInUser}
+                  </DropdownMenuItem>
+                  <DropdownMenuSeparator />
+                  <DropdownMenuItem onClick={handleLogout}>
+                    <LogOut className="mr-2 h-4 w-4" />
+                    <span>Logout</span>
+                  </DropdownMenuItem>
+                </>
+              ) : (
+                <DropdownMenuSub>
+                  <DropdownMenuSubTrigger>
+                    <User className="mr-2 h-4 w-4" />
+                    <span>Login</span>
+                  </DropdownMenuSubTrigger>
+                  <DropdownMenuPortal>
+                    <DropdownMenuSubContent>
+                      <DropdownMenuItem onClick={() => handleLogin('admin')}>
+                        <Shield className="mr-2 h-4 w-4" />
+                        <span>Admin</span>
+                      </DropdownMenuItem>
+                      <DropdownMenuItem onClick={() => handleLogin('patient')}>
+                        <Stethoscope className="mr-2 h-4 w-4" />
+                        <span>Patient</span>
+                      </DropdownMenuItem>
+                      <DropdownMenuItem onClick={() => handleLogin('donor')}>
+                        <HandHeart className="mr-2 h-4 w-4" />
+                        <span>Donor</span>
+                      </DropdownMenuItem>
+                    </DropdownMenuSubContent>
+                  </DropdownMenuPortal>
+                </DropdownMenuSub>
+              )}
+            </DropdownMenuContent>
+          </DropdownMenu>
           <div className="md:hidden">
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
