@@ -5,7 +5,7 @@ import {
   SidebarMenuItem,
   SidebarMenuButton,
 } from '@/components/ui/sidebar';
-import { HeartPulse, Home, BarChart2, DollarSign, MessageSquare, Info, Phone } from 'lucide-react';
+import { HeartPulse, Home, DollarSign, MessageSquare, Info, Phone } from 'lucide-react';
 
 export default function AppSidebar() {
   return (
@@ -28,12 +28,6 @@ export default function AppSidebar() {
             <SidebarMenuButton href="#features" tooltip="Features">
               <Info />
               Features
-            </SidebarMenuButton>
-          </SidebarMenuItem>
-          <SidebarMenuItem>
-            <SidebarMenuButton href="#forecasting" tooltip="Forecasting">
-              <BarChart2 />
-              Forecasting
             </SidebarMenuButton>
           </SidebarMenuItem>
           <SidebarMenuItem>

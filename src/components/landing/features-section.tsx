@@ -1,16 +1,11 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Bell, BrainCircuit, Database, Users } from "lucide-react";
+import { Bell, Database, Users } from "lucide-react";
 
 const features = [
   {
     icon: <Database className="h-8 w-8 text-primary" />,
     title: "Real-time Inventory",
     description: "Track blood units in real-time across all locations, ensuring you always have up-to-date information.",
-  },
-  {
-    icon: <BrainCircuit className="h-8 w-8 text-primary" />,
-    title: "AI Demand Forecasting",
-    description: "Our predictive analytics help you anticipate demand, reduce waste, and save lives.",
   },
   {
     icon: <Users className="h-8 w-8 text-primary" />,
@@ -34,7 +29,7 @@ export default function FeaturesSection() {
             Everything you need for efficient and intelligent blood bank operations.
           </p>
         </div>
-        <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-4">
+        <div className="grid gap-8 md:grid-cols-1 lg:grid-cols-3">
           {features.map((feature) => (
             <Card key={feature.title} className="text-center hover:shadow-lg transition-shadow duration-300">
               <CardHeader>

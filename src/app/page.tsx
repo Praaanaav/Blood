@@ -2,7 +2,6 @@
 import Header from '@/components/landing/header';
 import HeroSection from '@/components/landing/hero-section';
 import FeaturesSection from '@/components/landing/features-section';
-import DemandForecastingSection from '@/components/landing/demand-forecasting-section';
 import PricingSection from '@/components/landing/pricing-section';
 import TestimonialsSection from '@/components/landing/testimonials-section';
 import CtaSection from '@/components/landing/cta-section';
@@ -15,7 +14,6 @@ export default function Home() {
       <main className="flex-grow">
         <HeroSection />
         <FeaturesSection />
-        <DemandForecastingSection />
         <PricingSection />
         <TestimonialsSection />
         <CtaSection />
