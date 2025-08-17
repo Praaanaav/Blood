@@ -10,12 +10,9 @@ export default function HeroSection() {
             Revolutionize Blood Bank Management
           </h1>
           <p className="mx-auto mt-6 max-w-[700px] text-muted-foreground md:text-xl">
-            Ensure timely blood availability with our AI-powered demand forecasting and efficient donor management system.
+            Ensure timely blood availability with our efficient donor management system.
           </p>
           <div className="mt-8 flex justify-center gap-4">
-            <Button asChild size="lg">
-              <Link href="/register/donor">Become a Donor</Link>
-            </Button>
             <Button asChild size="lg" variant="outline">
               <Link href="#features">Learn More</Link>
             </Button>
