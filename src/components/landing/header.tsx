@@ -1,7 +1,8 @@
+
 'use client';
 
 import { Button } from "@/components/ui/button";
-import { HeartPulse, LogIn, LogOut, User, Shield, Stethoscope, HandHeart, UserPlus } from "lucide-react";
+import { HeartPulse, LogIn, LogOut, User, Shield, Stethoscope, HandHeart, UserPlus, Menu } from "lucide-react";
 import Link from "next/link";
 import {
   DropdownMenu,
@@ -9,12 +10,8 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
   DropdownMenuSeparator,
-  DropdownMenuSub,
-  DropdownMenuSubTrigger,
-  DropdownMenuSubContent,
-  DropdownMenuPortal,
+  DropdownMenuLabel,
 } from "@/components/ui/dropdown-menu"
-import { Menu } from "lucide-react";
 import React, { useState } from "react";
 
 
@@ -60,9 +57,10 @@ export default function Header() {
                 <UserAvatar />
               </Button>
             </DropdownMenuTrigger>
-            <DropdownMenuContent align="end">
+            <DropdownMenuContent align="end" className="w-56">
               {loggedInUser ? (
                 <>
+                  <DropdownMenuLabel>My Account</DropdownMenuLabel>
                   <DropdownMenuItem disabled>
                     Logged in as {loggedInUser}
                   </DropdownMenuItem>
@@ -74,46 +72,29 @@ export default function Header() {
                 </>
               ) : (
                 <>
-                  <DropdownMenuSub>
-                    <DropdownMenuSubTrigger>
-                      <LogIn className="mr-2 h-4 w-4" />
-                      <span>Login</span>
-                    </DropdownMenuSubTrigger>
-                    <DropdownMenuPortal>
-                      <DropdownMenuSubContent>
-                        <DropdownMenuItem onClick={() => handleLogin('admin')}>
-                          <Shield className="mr-2 h-4 w-4" />
-                          <span>Admin Login</span>
-                        </DropdownMenuItem>
-                        <DropdownMenuItem onClick={() => handleLogin('patient')}>
-                          <Stethoscope className="mr-2 h-4 w-4" />
-                          <span>Patient Login</span>
-                        </DropdownMenuItem>
-                        <DropdownMenuItem onClick={() => handleLogin('donor')}>
-                          <HandHeart className="mr-2 h-4 w-4" />
-                          <span>Donor Login</span>
-                        </DropdownMenuItem>
-                      </DropdownMenuSubContent>
-                    </DropdownMenuPortal>
-                  </DropdownMenuSub>
-                  <DropdownMenuSub>
-                    <DropdownMenuSubTrigger>
-                      <UserPlus className="mr-2 h-4 w-4" />
-                      <span>Register</span>
-                    </DropdownMenuSubTrigger>
-                    <DropdownMenuPortal>
-                      <DropdownMenuSubContent>
-                        <DropdownMenuItem>
-                          <HandHeart className="mr-2 h-4 w-4" />
-                          <span>Register as Donor</span>
-                        </DropdownMenuItem>
-                        <DropdownMenuItem>
-                          <Stethoscope className="mr-2 h-4 w-4" />
-                          <span>Register as Patient</span>
-                        </DropdownMenuItem>
-                      </DropdownMenuSubContent>
-                    </DropdownMenuPortal>
-                  </DropdownMenuSub>
+                  <DropdownMenuLabel>Login As</DropdownMenuLabel>
+                  <DropdownMenuItem onClick={() => handleLogin('admin')}>
+                    <Shield className="mr-2 h-4 w-4" />
+                    <span>Administrator</span>
+                  </DropdownMenuItem>
+                  <DropdownMenuItem onClick={() => handleLogin('patient')}>
+                    <Stethoscope className="mr-2 h-4 w-4" />
+                    <span>Patient</span>
+                  </DropdownMenuItem>
+                  <DropdownMenuItem onClick={() => handleLogin('donor')}>
+                    <HandHeart className="mr-2 h-4 w-4" />
+                    <span>Donor</span>
+                  </DropdownMenuItem>
+                  <DropdownMenuSeparator />
+                  <DropdownMenuLabel>Register</DropdownMenuLabel>
+                   <DropdownMenuItem>
+                      <HandHeart className="mr-2 h-4 w-4" />
+                      <span>Register as Donor</span>
+                  </DropdownMenuItem>
+                  <DropdownMenuItem>
+                      <Stethoscope className="mr-2 h-4 w-4" />
+                      <span>Register as Patient</span>
+                  </DropdownMenuItem>
                 </>
               )}
             </DropdownMenuContent>
