@@ -2,7 +2,7 @@
 'use client';
 
 import { Button } from "@/components/ui/button";
-import { HeartPulse, LogOut, Shield, Stethoscope, HandHeart, Menu, User } from "lucide-react";
+import { HeartPulse, LogOut, Shield, Stethoscope, HandHeart, Menu, User, UserPlus } from "lucide-react";
 import Link from "next/link";
 import {
   DropdownMenu,
@@ -24,10 +24,10 @@ export default function Header() {
 
   const UserAvatar = () => {
     if (!loggedInUser) return <User className="h-5 w-5" />;
-    if (loggedInUser === 'admin') return <Shield />;
-    if (loggedInUser === 'patient') return <Stethoscope />;
-    if (loggedInUser === 'donor') return <HandHeart />;
-    return <User/>
+    if (loggedInUser === 'admin') return <Shield className="h-5 w-5" />;
+    if (loggedInUser === 'patient') return <Stethoscope className="h-5 w-5"/>;
+    if (loggedInUser === 'donor') return <HandHeart className="h-5 w-5"/>;
+    return <User className="h-5 w-5"/>
   }
 
   return (
@@ -36,7 +36,7 @@ export default function Header() {
         <div className="flex items-center space-x-2 mr-6">
           <Link href="/" className="flex items-center space-x-2">
             <HeartPulse className="h-6 w-6 text-primary" />
-            <span className="font-bold sm:inline-block">BloodBank Landing</span>
+            <span className="font-bold sm:inline-block">BloodBank</span>
           </Link>
         </div>
         <nav className="hidden items-center space-x-6 text-sm font-medium md:flex">
@@ -68,7 +68,7 @@ export default function Header() {
                 </>
               ) : (
                 <>
-                  <DropdownMenuLabel>Login As</DropdownMenuLabel>
+                  <DropdownMenuLabel>Login</DropdownMenuLabel>
                   <DropdownMenuItem asChild>
                     <Link href="/login/admin">
                       <Shield className="mr-2 h-4 w-4" />
@@ -91,13 +91,13 @@ export default function Header() {
                   <DropdownMenuLabel>Register</DropdownMenuLabel>
                    <DropdownMenuItem asChild>
                       <Link href="/register/donor">
-                        <HandHeart className="mr-2 h-4 w-4" />
+                        <UserPlus className="mr-2 h-4 w-4" />
                         <span>Register as Donor</span>
                       </Link>
                   </DropdownMenuItem>
                   <DropdownMenuItem asChild>
                       <Link href="/register/patient">
-                        <Stethoscope className="mr-2 h-4 w-4" />
+                        <UserPlus className="mr-2 h-4 w-4" />
                         <span>Register as Patient</span>
                       </Link>
                   </DropdownMenuItem>
