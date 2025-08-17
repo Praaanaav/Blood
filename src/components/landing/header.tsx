@@ -96,10 +96,24 @@ export default function Header() {
                       </DropdownMenuSubContent>
                     </DropdownMenuPortal>
                   </DropdownMenuSub>
-                  <DropdownMenuItem>
-                    <UserPlus className="mr-2 h-4 w-4" />
-                    <span>Register</span>
-                  </DropdownMenuItem>
+                  <DropdownMenuSub>
+                    <DropdownMenuSubTrigger>
+                      <UserPlus className="mr-2 h-4 w-4" />
+                      <span>Register</span>
+                    </DropdownMenuSubTrigger>
+                    <DropdownMenuPortal>
+                      <DropdownMenuSubContent>
+                        <DropdownMenuItem>
+                          <HandHeart className="mr-2 h-4 w-4" />
+                          <span>Register as Donor</span>
+                        </DropdownMenuItem>
+                        <DropdownMenuItem>
+                          <Stethoscope className="mr-2 h-4 w-4" />
+                          <span>Register as Patient</span>
+                        </DropdownMenuItem>
+                      </DropdownMenuSubContent>
+                    </DropdownMenuPortal>
+                  </DropdownMenuSub>
                 </>
               )}
             </DropdownMenuContent>
