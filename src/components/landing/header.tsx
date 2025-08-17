@@ -20,11 +20,19 @@ import React from "react";
 export default function Header() {
   const [isAdmin, setIsAdmin] = React.useState(false);
 
+  React.useEffect(() => {
+    if (localStorage.getItem("isAdmin") === "true") {
+      setIsAdmin(true);
+    }
+  }, []);
+
   const handleAdminLogin = () => {
+    localStorage.setItem("isAdmin", "true");
     setIsAdmin(true);
   };
 
   const handleLogout = () => {
+    localStorage.removeItem("isAdmin");
     setIsAdmin(false);
   };
 
