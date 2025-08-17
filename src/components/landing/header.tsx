@@ -1,4 +1,3 @@
-
 'use client';
 
 import { Button } from "@/components/ui/button";
@@ -32,14 +31,14 @@ export default function Header() {
 
   return (
     <header className="sticky top-0 z-50 w-full border-b border-border/40 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-      <div className="container flex h-14 max-w-screen-2xl items-center">
+      <div className="container flex h-16 max-w-screen-2xl items-center">
         <div className="flex items-center space-x-2 mr-6">
           <Link href="/" className="flex items-center space-x-2">
             <HeartPulse className="h-6 w-6 text-primary" />
             <span className="font-bold sm:inline-block">BloodBank</span>
           </Link>
         </div>
-        <nav className="hidden items-center space-x-6 text-sm font-medium md:flex">
+        <nav className="hidden items-center space-x-8 text-sm font-medium md:flex">
             <Link href="/#features" className="transition-colors hover:text-foreground/80 text-foreground/60">Features</Link>
             <Link href="/#forecasting" className="transition-colors hover:text-foreground/80 text-foreground/60">Forecasting</Link>
             <Link href="/#pricing" className="transition-colors hover:text-foreground/80 text-foreground/60">Pricing</Link>
