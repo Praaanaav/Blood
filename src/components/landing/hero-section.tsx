@@ -7,12 +7,15 @@ export default function HeroSection() {
       <div className="container text-center">
         <div className="mx-auto max-w-3xl">
           <h1 className="text-4xl font-bold tracking-tighter sm:text-5xl md:text-6xl lg:text-7xl">
-            Revolutionize Blood Bank Management
+            Donate Blood, Save Lives
           </h1>
           <p className="mx-auto mt-6 max-w-[700px] text-muted-foreground md:text-xl">
-            Ensure timely blood availability with our efficient donor management system.
+            Your simple act of kindness can be a lifeline for someone in need. Join our community of heroes today.
           </p>
           <div className="mt-8 flex justify-center gap-4">
+            <Button asChild size="lg">
+              <Link href="#cta">Get Involved</Link>
+            </Button>
             <Button asChild size="lg" variant="outline">
               <Link href="#features">Learn More</Link>
             </Button>
