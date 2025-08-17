@@ -15,7 +15,11 @@ import React, { useState } from "react";
 
 
 export default function Header() {
-  const [loggedInUser, setLoggedInUser] = useState<string | null>('admin');
+  const [loggedInUser, setLoggedInUser] = useState<string | null>(null);
+
+  const handleAdminLogin = () => {
+    setLoggedInUser('admin');
+  };
 
   const handleLogout = () => {
     setLoggedInUser(null);
@@ -76,11 +80,9 @@ export default function Header() {
               ) : (
                 <>
                   <DropdownMenuLabel>Login</DropdownMenuLabel>
-                  <DropdownMenuItem asChild>
-                    <Link href="/login/admin">
+                  <DropdownMenuItem onClick={handleAdminLogin} className="cursor-pointer">
                       <Shield className="mr-2 h-4 w-4" />
                       <span>Administrator</span>
-                    </Link>
                   </DropdownMenuItem>
                   <DropdownMenuItem asChild>
                     <Link href="/login/patient">
