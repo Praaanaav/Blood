@@ -1,19 +1,6 @@
 import type {Metadata} from 'next';
 import './globals.css';
 import { Toaster } from "@/components/ui/toaster"
-import { Inter, Roboto_Mono } from 'next/font/google';
-
-const inter = Inter({
-  subsets: ['latin'],
-  display: 'swap',
-  variable: '--font-inter',
-})
-
-const roboto_mono = Roboto_Mono({
-  subsets: ['latin'],
-  display: 'swap',
-  variable: '--font-roboto-mono',
-})
 
 export const metadata: Metadata = {
   title: 'BloodBank Landing',
@@ -26,10 +13,10 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" suppressHydrationWarning className={`${inter.variable} ${roboto_mono.variable}`}>
+    <html lang="en" suppressHydrationWarning>
       <head>
       </head>
-      <body className="font-body antialiased">
+      <body>
         {children}
         <Toaster />
       </body>
