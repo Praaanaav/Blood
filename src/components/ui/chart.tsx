@@ -7,12 +7,8 @@ import {
   RadialBar,
   RadialBarChart as RadialBarChartPrimitive,
   type RadialBarChartProps,
-} from "recharts"
-import {
-  ChartContainer as ChartContainerPrimitive,
-  ChartTooltip as ChartTooltipPrimitive,
-  type ChartContainerProps,
-  type ChartTooltipProps,
+  Tooltip,
+  type TooltipProps,
 } from "recharts"
 
 import { cn } from "@/lib/utils"
@@ -20,44 +16,36 @@ import { cn } from "@/lib/utils"
 const ChartContainer = React.forwardRef<
   HTMLDivElement,
   React.ComponentProps<"div"> & {
-    config: ChartContainerProps["config"]
-    id?: ChartContainerProps["id"]
+    config?: any
+    id?: string
   }
 >(({ id = "chart", className, children, config, ...props }, ref) => {
   return (
-    <ChartContainerPrimitive
-      id={id}
-      config={config}
+    <div
+      ref={ref}
+      data-chart={id}
+      style={
+        {
+          "--chart-font-family": "var(--font-sans)",
+        } as React.CSSProperties
+      }
       className={cn(
         "flex aspect-video justify-center text-xs [&_.recharts-cartesian-axis-tick_text]:fill-muted-foreground [&_.recharts-curve.recharts-tooltip-cursor]:stroke-border [&_.recharts-polar-grid_path]:stroke-border [&_.recharts-radial-bar-background-sector]:fill-muted [&_.recharts-radial-bar-sector]:fill-primary [&_.recharts-reference-line-line]:stroke-border [&_.recharts-sector[role=tooltip]]:outline-none [&_.recharts-surface]:outline-none",
         className
       )}
       {...props}
     >
-      <ChartTooltip
-        content={
-          <ChartTooltipContent
-            hideIndicator
-            labelKey="fill"
-            labelFormatter={(value, payload) => {
-              return typeof payload[0].value === "number"
-                ? payload[0].payload.label
-                : ""
-            }}
-          />
-        }
-      />
       {children}
-    </ChartContainerPrimitive>
+    </div>
   )
 })
 ChartContainer.displayName = "Chart"
 
-const ChartTooltip = ChartTooltipPrimitive
+const ChartTooltip = Tooltip
 
 const ChartTooltipContent = React.forwardRef<
-  React.ElementRef<typeof ChartTooltipPrimitive.Content>,
-  React.ComponentProps<typeof ChartTooltipPrimitive.Content> & {
+  HTMLDivElement,
+  TooltipProps<any, any> & {
     hideLabel?: boolean
     hideIndicator?: boolean
     indicator?: "line" | "dot" | "dashed"
@@ -88,7 +76,7 @@ const ChartTooltipContent = React.forwardRef<
     }
 
     const item = payload[0]
-    const id = nameKey ? item.payload[nameKey] : item.name
+    const id = nameKey ? item.payload[nameKey] : (item.name || 'value')
     const value = formatter?.(item.value, id, item, 0, payload) ?? item.value
     const finalLabel =
       (labelKey ? item.payload[labelKey] : label) ?? item.name
@@ -129,16 +117,18 @@ const ChartTooltipContent = React.forwardRef<
               />
             )}
             <div className="flex-1">{id}</div>
-            <div className="text-right font-mono font-medium tabular-nums">
-              {value}
-            </div>
+            {value &&
+                <div className="text-right font-mono font-medium tabular-nums">
+                    {value}
+                </div>
+            }
           </div>
         </div>
       </div>
     )
   }
 )
-ChartTooltipContent.displayName = ChartTooltipPrimitive.Content.displayName
+ChartTooltipContent.displayName = Tooltip.displayName
 
 const RadialBarChart = React.forwardRef<
   HTMLDivElement,
