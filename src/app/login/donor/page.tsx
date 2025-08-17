@@ -55,6 +55,7 @@ export default function DonorLoginPage() {
           height="1080"
           data-ai-hint="blood donation"
           className="h-full w-full object-cover dark:brightness-[0.2] dark:grayscale"
+          priority
         />
       </div>
     </div>

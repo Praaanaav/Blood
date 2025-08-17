@@ -57,6 +57,7 @@ export default function DonorRegisterPage() {
             height="1080"
             data-ai-hint="community health"
             className="h-full w-full object-cover dark:brightness-[0.2] dark:grayscale"
+            priority
             />
         </div>
     </div>

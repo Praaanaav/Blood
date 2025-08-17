@@ -16,6 +16,7 @@ export default function PatientRegisterPage() {
           height="1080"
           data-ai-hint="healthcare support"
           className="h-full w-full object-cover dark:brightness-[0.2] dark:grayscale"
+          priority
         />
       </div>
        <div className="flex items-center justify-center py-12">

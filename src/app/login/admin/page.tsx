@@ -49,6 +49,7 @@ export default function AdminLoginPage() {
           height="1080"
           data-ai-hint="medical professional"
           className="h-full w-full object-cover dark:brightness-[0.2] dark:grayscale"
+          priority
         />
       </div>
     </div>
