@@ -76,21 +76,21 @@ export default function Header() {
                 <DropdownMenuSub>
                   <DropdownMenuSubTrigger>
                     <User className="mr-2 h-4 w-4" />
-                    <span>Login</span>
+                    <span>Login / Sign Up</span>
                   </DropdownMenuSubTrigger>
                   <DropdownMenuPortal>
                     <DropdownMenuSubContent>
                       <DropdownMenuItem onClick={() => handleLogin('admin')}>
                         <Shield className="mr-2 h-4 w-4" />
-                        <span>Admin</span>
+                        <span>Admin Login</span>
                       </DropdownMenuItem>
                       <DropdownMenuItem onClick={() => handleLogin('patient')}>
                         <Stethoscope className="mr-2 h-4 w-4" />
-                        <span>Patient</span>
+                        <span>Patient Login</span>
                       </DropdownMenuItem>
                       <DropdownMenuItem onClick={() => handleLogin('donor')}>
                         <HandHeart className="mr-2 h-4 w-4" />
-                        <span>Donor</span>
+                        <span>Donor Login</span>
                       </DropdownMenuItem>
                     </DropdownMenuSubContent>
                   </DropdownMenuPortal>
