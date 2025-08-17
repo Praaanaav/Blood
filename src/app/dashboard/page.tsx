@@ -3,6 +3,8 @@
 
 import Header from '@/components/landing/header';
 import Footer from '@/components/landing/footer';
+import { Button } from '@/components/ui/button';
+import Link from 'next/link';
 
 export default function DashboardPage() {
   return (
@@ -13,6 +15,9 @@ export default function DashboardPage() {
           <div className="text-center py-16 text-muted-foreground">
             <h1 className="text-4xl font-bold tracking-tighter sm:text-5xl">Dashboard</h1>
             <p className="mt-4">This page is currently empty.</p>
+            <Button variant="outline" className="mt-8" asChild>
+                <Link href="/">Back to Home</Link>
+            </Button>
           </div>
         </div>
       </main>

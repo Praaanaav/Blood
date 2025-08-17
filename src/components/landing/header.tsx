@@ -79,36 +79,9 @@ export default function Header() {
                 </>
               ) : (
                 <>
-                  <DropdownMenuLabel>Login</DropdownMenuLabel>
                   <DropdownMenuItem onClick={handleAdminLogin} className="cursor-pointer">
                       <Shield className="mr-2 h-4 w-4" />
-                      <span>Administrator</span>
-                  </DropdownMenuItem>
-                  <DropdownMenuItem asChild>
-                    <Link href="/login/patient">
-                      <Stethoscope className="mr-2 h-4 w-4" />
-                      <span>Patient</span>
-                    </Link>
-                  </DropdownMenuItem>
-                  <DropdownMenuItem asChild>
-                    <Link href="/login/donor">
-                      <HandHeart className="mr-2 h-4 w-4" />
-                      <span>Donor</span>
-                    </Link>
-                  </DropdownMenuItem>
-                  <DropdownMenuSeparator />
-                  <DropdownMenuLabel>Register</DropdownMenuLabel>
-                   <DropdownMenuItem asChild>
-                      <Link href="/register/donor">
-                        <UserPlus className="mr-2 h-4 w-4" />
-                        <span>Register as Donor</span>
-                      </Link>
-                  </DropdownMenuItem>
-                  <DropdownMenuItem asChild>
-                      <Link href="/register/patient">
-                        <UserPlus className="mr-2 h-4 w-4" />
-                        <span>Register as Patient</span>
-                      </Link>
+                      <span>Login as Admin</span>
                   </DropdownMenuItem>
                 </>
               )}
