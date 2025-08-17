@@ -49,7 +49,7 @@ export default function DashboardPage() {
                         <CardDescription>Real-time availability of blood units.</CardDescription>
                     </CardHeader>
                     <CardContent>
-                        <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-8 gap-4">
+                        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                             {bloodGroups.map((blood) => (
                                 <Card key={blood.group} className="text-center flex flex-col justify-between">
                                     <CardHeader className="p-4">
