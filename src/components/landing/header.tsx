@@ -15,6 +15,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 import React from "react";
+import { toast } from "sonner";
 
 
 export default function Header() {
@@ -29,11 +30,13 @@ export default function Header() {
   const handleAdminLogin = () => {
     localStorage.setItem("isAdmin", "true");
     setIsAdmin(true);
+    toast.success("Admin logged in successfully.");
   };
 
   const handleLogout = () => {
     localStorage.removeItem("isAdmin");
     setIsAdmin(false);
+    toast.info("You have been logged out.");
   };
 
   return (
