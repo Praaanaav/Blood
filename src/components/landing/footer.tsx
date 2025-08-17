@@ -16,7 +16,7 @@ export default function Footer() {
           </nav>
         </div>
         <div className="mt-6 text-center text-sm text-muted-foreground">
-          <p>&copy; {new Date().getFullYear()} BloodBank Landing. All rights reserved.</p>
+          <p>&copy; {new Date().getFullYear()} BloodBank. All rights reserved.</p>
         </div>
       </div>
     </footer>
