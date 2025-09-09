@@ -25,7 +25,11 @@ export default function LoginPage() {
       router.push("/");
     } catch (error: any) {
       console.error("Login Error:", error);
-      toast.error(error.message);
+      if (error.code === 'auth/invalid-credential') {
+        toast.error("Invalid email or password. Please try again.");
+      } else {
+        toast.error(error.message);
+      }
     }
   };
 
