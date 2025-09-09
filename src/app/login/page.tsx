@@ -20,13 +20,7 @@ export default function LoginPage() {
 
   const handleLogin = async () => {
     try {
-      const userCredential = await signInWithEmailAndPassword(auth, email, password);
-      // The new registration flow ensures the email is verified before account creation.
-      // So this check is now for older accounts or edge cases.
-      if (!userCredential.user.emailVerified) {
-        toast.error("Email not verified. Please check your inbox for the verification link.");
-        return;
-      }
+      await signInWithEmailAndPassword(auth, email, password);
       toast.success("Logged in successfully!");
       router.push("/");
     } catch (error: any) {
