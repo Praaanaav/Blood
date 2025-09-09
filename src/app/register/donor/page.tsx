@@ -1,11 +1,39 @@
+'use client'
+
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { auth } from "@/lib/firebase";
+import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
 import { Home } from "lucide-react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
+import React, { useState } from "react";
+import { toast } from "sonner";
 
 export default function DonorRegisterPage() {
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const router = useRouter();
+
+  const handleSignUp = async () => {
+    try {
+      const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+      if (userCredential.user) {
+        await updateProfile(userCredential.user, {
+          displayName: name,
+        });
+      }
+      toast.success("Account created successfully!");
+      router.push("/");
+    } catch (error: any) {
+      console.error("Registration Error:", error);
+      toast.error(error.message);
+    }
+  };
+
   return (
     <div className="flex flex-col min-h-screen bg-background">
       <div className="flex-grow flex items-center justify-center p-4">
@@ -26,19 +54,19 @@ export default function DonorRegisterPage() {
             <CardContent className="space-y-4">
               <div className="space-y-2">
                 <Label htmlFor="name">Full Name</Label>
-                <Input id="name" type="text" placeholder="John Doe" />
+                <Input id="name" type="text" placeholder="John Doe" value={name} onChange={(e) => setName(e.target.value)} />
               </div>
               <div className="space-y-2">
                 <Label htmlFor="email">Email</Label>
-                <Input id="email" type="email" placeholder="donor@example.com" />
+                <Input id="email" type="email" placeholder="donor@example.com" value={email} onChange={(e) => setEmail(e.target.value)} />
               </div>
               <div className="space-y-2">
                 <Label htmlFor="password">Password</Label>
-                <Input id="password" type="password" />
+                <Input id="password" type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
               </div>
             </CardContent>
             <CardFooter className="flex flex-col gap-4">
-              <Button className="w-full">Create Account</Button>
+              <Button className="w-full" onClick={handleSignUp}>Create Account</Button>
               <p className="text-sm text-center text-muted-foreground">
                 Already have an account?{" "}
                 <Link href="/login/donor" className="font-semibold text-primary hover:underline">
