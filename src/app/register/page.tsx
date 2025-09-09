@@ -1,3 +1,4 @@
+
 'use client'
 
 import { Button } from "@/components/ui/button";
@@ -12,7 +13,7 @@ import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 import { toast } from "sonner";
 
-export default function PatientRegisterPage() {
+export default function RegisterPage() {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -48,17 +49,17 @@ export default function PatientRegisterPage() {
           </div>
           <Card>
             <CardHeader className="space-y-1 text-center">
-              <CardTitle className="text-2xl">Create a Patient Account</CardTitle>
-              <CardDescription>Register to manage your information and appointments.</CardDescription>
+              <CardTitle className="text-2xl">Create an Account</CardTitle>
+              <CardDescription>Join our community. It only takes a minute.</CardDescription>
             </CardHeader>
             <CardContent className="space-y-4">
               <div className="space-y-2">
                 <Label htmlFor="name">Full Name</Label>
-                <Input id="name" type="text" placeholder="Jane Doe" value={name} onChange={(e) => setName(e.target.value)} />
+                <Input id="name" type="text" placeholder="John Doe" value={name} onChange={(e) => setName(e.target.value)} />
               </div>
               <div className="space-y-2">
                 <Label htmlFor="email">Email</Label>
-                <Input id="email" type="email" placeholder="patient@example.com" value={email} onChange={(e) => setEmail(e.target.value)} />
+                <Input id="email" type="email" placeholder="user@example.com" value={email} onChange={(e) => setEmail(e.target.value)} />
               </div>
               <div className="space-y-2">
                 <Label htmlFor="password">Password</Label>
@@ -69,7 +70,7 @@ export default function PatientRegisterPage() {
               <Button className="w-full" onClick={handleSignUp}>Create Account</Button>
               <p className="text-sm text-center text-muted-foreground">
                 Already have an account?{" "}
-                <Link href="/login/patient" className="font-semibold text-primary hover:underline">
+                <Link href="/login" className="font-semibold text-primary hover:underline">
                   Login
                 </Link>
               </p>

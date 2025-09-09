@@ -8,11 +8,7 @@ import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
-  DropdownMenuPortal,
   DropdownMenuSeparator,
-  DropdownMenuSub,
-  DropdownMenuSubContent,
-  DropdownMenuSubTrigger,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 import React from "react";
@@ -73,35 +69,13 @@ export default function Header() {
                 </DropdownMenu>
             </div>
           ) : (
-            <div className="hidden md:flex">
-              <DropdownMenu>
-                <DropdownMenuTrigger asChild>
-                  <Button variant="ghost">
-                    <User className="mr-2"/>
-                    Login / Sign Up
-                  </Button>
-                </DropdownMenuTrigger>
-                <DropdownMenuContent align="end">
-                  <DropdownMenuSub>
-                    <DropdownMenuSubTrigger>Login</DropdownMenuSubTrigger>
-                    <DropdownMenuPortal>
-                      <DropdownMenuSubContent>
-                        <DropdownMenuItem asChild><Link href="/login/donor">Donor</Link></DropdownMenuItem>
-                        <DropdownMenuItem asChild><Link href="/login/patient">Patient</Link></DropdownMenuItem>
-                      </DropdownMenuSubContent>
-                    </DropdownMenuPortal>
-                  </DropdownMenuSub>
-                  <DropdownMenuSub>
-                    <DropdownMenuSubTrigger>Sign Up</DropdownMenuSubTrigger>
-                    <DropdownMenuPortal>
-                      <DropdownMenuSubContent>
-                        <DropdownMenuItem asChild><Link href="/register/donor">Donor</Link></DropdownMenuItem>
-                        <DropdownMenuItem asChild><Link href="/register/patient">Patient</Link></DropdownMenuItem>
-                      </DropdownMenuSubContent>
-                    </DropdownMenuPortal>
-                  </DropdownMenuSub>
-                </DropdownMenuContent>
-              </DropdownMenu>
+            <div className="hidden md:flex items-center space-x-2">
+               <Button asChild variant="ghost">
+                <Link href="/login">Login</Link>
+              </Button>
+              <Button asChild>
+                <Link href="/register">Sign Up</Link>
+              </Button>
             </div>
           )}
           <div className="md:hidden">
@@ -120,11 +94,8 @@ export default function Header() {
                   <DropdownMenuItem asChild><Link href="/#features">Features</Link></DropdownMenuItem>
                   <DropdownMenuItem asChild><Link href="/#testimonials">Testimonials</Link></DropdownMenuItem>
                   <DropdownMenuSeparator />
-                  <DropdownMenuItem asChild><Link href="/login/donor">Donor Login</Link></DropdownMenuItem>
-                  <DropdownMenuItem asChild><Link href="/login/patient">Patient Login</Link></DropdownMenuItem>
-                  <DropdownMenuSeparator />
-                  <DropdownMenuItem asChild><Link href="/register/donor">Donor Sign Up</Link></DropdownMenuItem>
-                  <DropdownMenuItem asChild><Link href="/register/patient">Patient Sign Up</Link></DropdownMenuItem>
+                  <DropdownMenuItem asChild><Link href="/login">Login</Link></DropdownMenuItem>
+                  <DropdownMenuItem asChild><Link href="/register">Sign Up</Link></DropdownMenuItem>
                 </DropdownMenuContent>
               </DropdownMenu>
             )}

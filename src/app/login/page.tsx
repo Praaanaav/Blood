@@ -1,3 +1,4 @@
+
 'use client'
 
 import { Button } from "@/components/ui/button";
@@ -12,7 +13,7 @@ import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 import { toast } from "sonner";
 
-export default function PatientLoginPage() {
+export default function LoginPage() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const router = useRouter();
@@ -27,7 +28,7 @@ export default function PatientLoginPage() {
       toast.error(error.message);
     }
   };
-  
+
   return (
     <div className="flex flex-col min-h-screen bg-background">
       <div className="flex-grow flex items-center justify-center p-4">
@@ -42,13 +43,13 @@ export default function PatientLoginPage() {
             </div>
           <Card>
             <CardHeader className="space-y-1 text-center">
-              <CardTitle className="text-2xl">Patient Login</CardTitle>
+              <CardTitle className="text-2xl">Login</CardTitle>
               <CardDescription>Welcome back! Please enter your details.</CardDescription>
             </CardHeader>
             <CardContent className="space-y-4">
               <div className="space-y-2">
                 <Label htmlFor="email">Email</Label>
-                <Input id="email" type="email" placeholder="patient@example.com" value={email} onChange={(e) => setEmail(e.target.value)} />
+                <Input id="email" type="email" placeholder="user@example.com" value={email} onChange={(e) => setEmail(e.target.value)} />
               </div>
               <div className="space-y-2">
                 <Label htmlFor="password">Password</Label>
@@ -59,7 +60,7 @@ export default function PatientLoginPage() {
               <Button className="w-full" onClick={handleLogin}>Login</Button>
               <p className="text-sm text-center text-muted-foreground">
                 Don't have an account?{" "}
-                <Link href="/register/patient" className="font-semibold text-primary hover:underline">
+                <Link href="/register" className="font-semibold text-primary hover:underline">
                   Sign up
                 </Link>
               </p>
