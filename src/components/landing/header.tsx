@@ -24,6 +24,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 
 export default function Header() {
   const [user, setUser] = React.useState<FirebaseUser | null>(null);
+  const ADMIN_EMAIL = "admin@example.com";
 
   React.useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
@@ -41,6 +42,8 @@ export default function Header() {
     }
   };
 
+  const isAdmin = user && user.email === ADMIN_EMAIL;
+
   return (
     <header className="sticky top-0 z-50 w-full border-b border-border/40 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
       <div className="container flex h-20 max-w-screen-2xl items-center">
@@ -53,7 +56,7 @@ export default function Header() {
         <nav className="hidden items-center space-x-8 text-sm font-medium md:flex">
             <Link href="/#features" className="transition-colors hover:text-foreground/80 text-foreground/60">Features</Link>
             <Link href="/#testimonials" className="transition-colors hover:text-foreground/80 text-foreground/60">Testimonials</Link>
-            {user && (
+            {isAdmin && (
               <Button asChild variant="secondary">
                 <Link href="/dashboard">Dashboard</Link>
               </Button>
@@ -112,9 +115,11 @@ export default function Header() {
           <div className="md:hidden">
              {user ? (
                 <div className="flex items-center gap-4">
-                  <Button asChild variant="outline" size="sm">
-                    <Link href="/dashboard">Dashboard</Link>
-                  </Button>
+                  {isAdmin && (
+                    <Button asChild variant="outline" size="sm">
+                      <Link href="/dashboard">Dashboard</Link>
+                    </Button>
+                  )}
                   <Button onClick={handleLogout} variant="ghost" size="sm">Logout</Button>
                 </div>
               ) : (
