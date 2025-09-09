@@ -21,13 +21,16 @@ export default function RegisterPage() {
   const [isVerifying, setIsVerifying] = useState(false);
   const router = useRouter();
 
+  // This URL must be authorized in the Firebase Console
   const actionCodeSettings = {
-    url: typeof window !== 'undefined' ? `${window.location.origin}/register` : 'http://localhost:9002/register',
+    url: 'http://localhost:9002/register',
     handleCodeInApp: true,
   };
   
   useEffect(() => {
     // This effect runs only on the client-side
+    if (typeof window === 'undefined') return;
+
     const currentUrl = window.location.href;
     if (isSignInWithEmailLink(auth, currentUrl)) {
         setIsVerifying(true);
