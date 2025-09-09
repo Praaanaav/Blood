@@ -22,16 +22,14 @@ export default function RegisterPage() {
   const router = useRouter();
 
   const actionCodeSettings = {
-    url: 'http://localhost:9002/register', // Statically set for consistency
+    url: typeof window !== 'undefined' ? `${window.location.origin}/register` : 'http://localhost:9002/register',
     handleCodeInApp: true,
   };
   
   useEffect(() => {
     // This effect runs only on the client-side
     const currentUrl = window.location.href;
-    const isVerificationLink = isSignInWithEmailLink(auth, currentUrl);
-
-    if (isVerificationLink) {
+    if (isSignInWithEmailLink(auth, currentUrl)) {
         setIsVerifying(true);
         let savedEmail = window.localStorage.getItem('emailForSignIn');
         if (!savedEmail) {
@@ -44,15 +42,12 @@ export default function RegisterPage() {
         const savedPassword = window.localStorage.getItem('passwordForSignIn');
         if (!savedPassword) {
             toast.error("Could not retrieve your password. Your session may have expired. Please restart the registration process.");
-            // Clean up just the email to force a full restart
             window.localStorage.removeItem('emailForSignIn');
             setIsVerifying(false);
             router.push('/register');
             return;
         }
 
-        // We have email and password, now we can finalize the account.
-        // First, we sign in with the link to confirm the email is valid.
         signInWithEmailLink(auth, savedEmail, currentUrl)
             .then((result) => {
                 // The user is temporarily signed in. Now, we delete this temp user.
@@ -63,9 +58,7 @@ export default function RegisterPage() {
                 return createUserWithEmailAndPassword(auth, savedEmail, savedPassword);
             })
             .then((finalUserCredential) => {
-                // Account is created and user is signed in.
                 toast.success("Account created successfully! You can now log in.");
-                // Clean up localStorage
                 window.localStorage.removeItem('emailForSignIn');
                 window.localStorage.removeItem('passwordForSignIn');
                 router.push("/login");
@@ -74,7 +67,6 @@ export default function RegisterPage() {
                 console.error("Verification Error:", error);
                 toast.error(error.message || "An error occurred during verification. Please try again.");
                 setIsVerifying(false);
-                // Clean up local storage on error
                 window.localStorage.removeItem('emailForSignIn');
                 window.localStorage.removeItem('passwordForSignIn');
                 router.push('/register');
@@ -89,8 +81,7 @@ export default function RegisterPage() {
       return;
     }
     try {
-        // NOTE: Storing sensitive data like a password in localStorage is not recommended for production apps.
-        // This is a simplified flow. For a real app, consider using server-side sessions or more secure storage.
+        // NOTE: Storing sensitive data like a password in localStorage is not recommended for production apps without further security measures.
         window.localStorage.setItem('emailForSignIn', email);
         window.localStorage.setItem('passwordForSignIn', password); 
         await sendSignInLinkToEmail(auth, email, actionCodeSettings);
@@ -99,7 +90,6 @@ export default function RegisterPage() {
     } catch (error: any) {
         console.error("Registration Error:", error);
         toast.error(error.message);
-        // Clean up on failure to send email
         window.localStorage.removeItem('emailForSignIn');
         window.localStorage.removeItem('passwordForSignIn');
     }
