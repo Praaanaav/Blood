@@ -34,7 +34,7 @@ export default function Header() {
   const handleLogout = async () => {
     try {
       await signOut(auth);
-      toast.info("You have been logged out.");
+      toast.error("You have been logged out.");
     } catch (error: any) {
       toast.error(error.message);
     }
