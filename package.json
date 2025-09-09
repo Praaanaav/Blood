@@ -19,6 +19,7 @@
     "clsx": "^2.1.1",
     "firebase": "^10.12.3",
     "firebase-admin": "^12.1.1",
+    "inquirer": "^8.2.4",
     "lucide-react": "^0.475.0",
     "next": "15.3.3",
     "react": "^18.3.1",

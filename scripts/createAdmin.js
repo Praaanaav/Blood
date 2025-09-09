@@ -1,13 +1,11 @@
 // scripts/createAdmin.js
 const admin = require('firebase-admin');
 const fs = require('fs');
+const inquirer = require('inquirer');
 
 // --- Configuration ---
-const ADMIN_EMAIL = 'admin@example.com';
-const ADMIN_PASSWORD = 'password'; // Use a strong password in a real project
 const SERVICE_ACCOUNT_PATH = './serviceAccountKey.json';
 // ---------------------
-
 
 // Check if service account key file exists
 if (!fs.existsSync(SERVICE_ACCOUNT_PATH)) {
@@ -32,26 +30,54 @@ try {
     }
 }
 
-
 const createAdminUser = async () => {
     try {
-        console.log(`Checking if admin user '${ADMIN_EMAIL}' exists...`);
-        // Check if user already exists
+        const answers = await inquirer.prompt([
+            {
+                type: 'input',
+                name: 'email',
+                message: 'Enter the email for the new admin user:',
+                validate: function (value) {
+                    const pass = value.match(
+                        /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+                    );
+                    if (pass) {
+                        return true;
+                    }
+                    return 'Please enter a valid email address.';
+                },
+            },
+            {
+                type: 'password',
+                name: 'password',
+                message: 'Enter a password for the new admin user (must be at least 6 characters):',
+                mask: '*',
+                validate: function (value) {
+                    if (value.length >= 6) {
+                        return true;
+                    }
+                    return 'Password must be at least 6 characters long.';
+                }
+            },
+        ]);
+
+        const { email, password } = answers;
+
+        console.log(`Checking if admin user '${email}' exists...`);
         try {
-            await admin.auth().getUserByEmail(ADMIN_EMAIL);
-            console.log('\x1b[33m%s\x1b[0m', `Admin user '${ADMIN_EMAIL}' already exists. No action taken.`);
+            await admin.auth().getUserByEmail(email);
+            console.log('\x1b[33m%s\x1b[0m', `Admin user '${email}' already exists. No action taken.`);
             return;
         } catch (error) {
             if (error.code !== 'auth/user-not-found') {
                 throw error;
             }
-            // User does not exist, so we can create them.
         }
         
-        console.log(`Creating admin user '${ADMIN_EMAIL}'...`);
+        console.log(`Creating admin user '${email}'...`);
         const userRecord = await admin.auth().createUser({
-            email: ADMIN_EMAIL,
-            password: ADMIN_PASSWORD,
+            email: email,
+            password: password,
             displayName: 'Administrator',
         });
 
@@ -60,8 +86,15 @@ const createAdminUser = async () => {
         console.log(`- Email: ${userRecord.email}`);
 
     } catch (error) {
-        console.error('\x1b[31m%s\x1b[0m', 'Error creating admin user:');
-        console.error(error.message);
+        if (error.isTtyError) {
+             console.error('\x1b[31m%s\x1b[0m', 'Error: Prompt could not be rendered in the current environment.');
+        } else {
+            console.error('\x1b[31m%s\x1b[0m', 'Error creating admin user:');
+            console.error(error.message);
+        }
+    } finally {
+        // The script will exit automatically, but we ensure the db connection is closed if we were using it.
+        // For auth, this is not strictly necessary but good practice for other DB types.
     }
 };
 
