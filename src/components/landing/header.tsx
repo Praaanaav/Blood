@@ -96,6 +96,7 @@ export default function Header() {
                       <DropdownMenuSubContent>
                         <DropdownMenuItem asChild><Link href="/login/donor">Donor</Link></DropdownMenuItem>
                         <DropdownMenuItem asChild><Link href="/login/patient">Patient</Link></DropdownMenuItem>
+                        <DropdownMenuItem asChild><Link href="/login/admin">Admin</Link></DropdownMenuItem>
                       </DropdownMenuSubContent>
                     </DropdownMenuPortal>
                   </DropdownMenuSub>
@@ -135,6 +136,7 @@ export default function Header() {
                   <DropdownMenuSeparator />
                   <DropdownMenuItem asChild><Link href="/login/donor">Donor Login</Link></DropdownMenuItem>
                   <DropdownMenuItem asChild><Link href="/login/patient">Patient Login</Link></DropdownMenuItem>
+                  <DropdownMenuItem asChild><Link href="/login/admin">Admin Login</Link></DropdownMenuItem>
                   <DropdownMenuSeparator />
                   <DropdownMenuItem asChild><Link href="/register/donor">Donor Sign Up</Link></DropdownMenuItem>
                   <DropdownMenuItem asChild><Link href="/register/patient">Patient Sign Up</Link></DropdownMenuItem>
