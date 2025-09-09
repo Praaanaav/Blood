@@ -7,7 +7,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { auth } from "@/lib/firebase";
-import { onAuthStateChanged, signInWithEmailAndPassword } from "firebase/auth";
+import { onAuthStateChanged, signInWithEmailAndPassword, signOut } from "firebase/auth";
 import { Home } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -31,9 +31,26 @@ export default function LoginPage() {
 
   const handleLogin = async () => {
     try {
-      await signInWithEmailAndPassword(auth, email, password);
-      // TODO: Implement role-based redirection
-      // For now, both admin and user are redirected to the homepage
+      const userCredential = await signInWithEmailAndPassword(auth, email, password);
+      const user = userCredential.user;
+
+      // Force refresh to get the latest custom claims
+      const idTokenResult = await user.getIdTokenResult(true);
+      const isAdmin = idTokenResult.claims.admin === true;
+
+      // Role-based access control
+      if (role === 'admin' && !isAdmin) {
+        await signOut(auth);
+        toast.error("Login failed: You are not authorized as an admin.");
+        return;
+      }
+
+      if (role === 'user' && isAdmin) {
+        await signOut(auth);
+        toast.error("Login failed: Admin accounts cannot log in as a user.");
+        return;
+      }
+      
       router.push("/");
       toast.success("Logged in successfully!");
     } catch (error: any) {
