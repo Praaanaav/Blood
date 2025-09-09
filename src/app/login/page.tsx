@@ -22,6 +22,7 @@ export default function LoginPage() {
     try {
       const userCredential = await signInWithEmailAndPassword(auth, email, password);
       if (!userCredential.user.emailVerified) {
+        // This check is good practice, though our new flow ensures verification.
         toast.error("Email not verified. Please check your inbox for the verification link.");
         return;
       }
