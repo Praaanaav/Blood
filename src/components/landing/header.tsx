@@ -58,7 +58,7 @@ export default function Header() {
                     <Button variant="ghost" className="flex items-center gap-2">
                       <Avatar className="h-8 w-8">
                         <AvatarImage src={user.photoURL ?? undefined} />
-                        <AvatarFallback>{user.displayName?.charAt(0).toUpperCase()}</AvatarFallback>
+                        <AvatarFallback>{user.displayName?.charAt(0).toUpperCase() ?? 'U'}</AvatarFallback>
                       </Avatar>
                       <span>{user.displayName}</span>
                     </Button>

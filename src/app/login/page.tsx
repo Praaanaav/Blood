@@ -20,7 +20,11 @@ export default function LoginPage() {
 
   const handleLogin = async () => {
     try {
-      await signInWithEmailAndPassword(auth, email, password);
+      const userCredential = await signInWithEmailAndPassword(auth, email, password);
+      if (!userCredential.user.emailVerified) {
+        toast.error("Email not verified. Please check your inbox for the verification link.");
+        return;
+      }
       toast.success("Logged in successfully!");
       router.push("/");
     } catch (error: any) {

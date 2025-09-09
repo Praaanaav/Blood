@@ -6,7 +6,7 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { auth } from "@/lib/firebase";
-import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
+import { createUserWithEmailAndPassword, sendEmailVerification, updateProfile } from "firebase/auth";
 import { Home } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -26,8 +26,9 @@ export default function RegisterPage() {
         await updateProfile(userCredential.user, {
           displayName: name,
         });
+        await sendEmailVerification(userCredential.user);
       }
-      toast.success("Account created successfully!");
+      toast.success("Account created! Please check your email to verify your account.");
       router.push("/");
     } catch (error: any) {
       console.error("Registration Error:", error);
