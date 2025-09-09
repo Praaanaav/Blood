@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { auth } from "@/lib/firebase";
 import { onAuthStateChanged, signInWithEmailAndPassword } from "firebase/auth";
 import { Home } from "lucide-react";
@@ -16,6 +17,7 @@ import { toast } from "sonner";
 export default function LoginPage() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [role, setRole] = useState('user');
   const router = useRouter();
 
   useEffect(() => {
@@ -30,6 +32,8 @@ export default function LoginPage() {
   const handleLogin = async () => {
     try {
       await signInWithEmailAndPassword(auth, email, password);
+      // TODO: Implement role-based redirection
+      // For now, both admin and user are redirected to the homepage
       router.push("/");
       toast.success("Logged in successfully!");
     } catch (error: any) {
@@ -67,6 +71,19 @@ export default function LoginPage() {
               <div className="space-y-2">
                 <Label htmlFor="password">Password</Label>
                 <Input id="password" type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
+              </div>
+               <div className="space-y-2">
+                <Label>Role</Label>
+                <RadioGroup defaultValue="user" onValueChange={setRole} className="flex gap-4">
+                  <div className="flex items-center space-x-2">
+                    <RadioGroupItem value="user" id="user" />
+                    <Label htmlFor="user">User</Label>
+                  </div>
+                  <div className="flex items-center space-x-2">
+                    <RadioGroupItem value="admin" id="admin" />
+                    <Label htmlFor="admin">Admin</Label>
+                  </div>
+                </RadioGroup>
               </div>
             </CardContent>
             <CardFooter className="flex flex-col gap-4">
