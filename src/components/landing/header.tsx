@@ -24,7 +24,6 @@ import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 
 export default function Header() {
   const [user, setUser] = React.useState<FirebaseUser | null>(null);
-  const ADMIN_EMAIL = "admin@example.com";
 
   React.useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
@@ -42,8 +41,6 @@ export default function Header() {
     }
   };
 
-  const isAdmin = user && user.email === ADMIN_EMAIL;
-
   return (
     <header className="sticky top-0 z-50 w-full border-b border-border/40 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
       <div className="container flex h-20 max-w-screen-2xl items-center">
@@ -56,11 +53,6 @@ export default function Header() {
         <nav className="hidden items-center space-x-8 text-sm font-medium md:flex">
             <Link href="/#features" className="transition-colors hover:text-foreground/80 text-foreground/60">Features</Link>
             <Link href="/#testimonials" className="transition-colors hover:text-foreground/80 text-foreground/60">Testimonials</Link>
-            {isAdmin && (
-              <Button asChild variant="secondary">
-                <Link href="/dashboard">Dashboard</Link>
-              </Button>
-            )}
         </nav>
         <div className="flex flex-1 items-center justify-end space-x-4">
           {user ? (
@@ -96,7 +88,6 @@ export default function Header() {
                       <DropdownMenuSubContent>
                         <DropdownMenuItem asChild><Link href="/login/donor">Donor</Link></DropdownMenuItem>
                         <DropdownMenuItem asChild><Link href="/login/patient">Patient</Link></DropdownMenuItem>
-                        <DropdownMenuItem asChild><Link href="/login/admin">Admin</Link></DropdownMenuItem>
                       </DropdownMenuSubContent>
                     </DropdownMenuPortal>
                   </DropdownMenuSub>
@@ -116,11 +107,6 @@ export default function Header() {
           <div className="md:hidden">
              {user ? (
                 <div className="flex items-center gap-4">
-                  {isAdmin && (
-                    <Button asChild variant="outline" size="sm">
-                      <Link href="/dashboard">Dashboard</Link>
-                    </Button>
-                  )}
                   <Button onClick={handleLogout} variant="ghost" size="sm">Logout</Button>
                 </div>
               ) : (
@@ -136,7 +122,6 @@ export default function Header() {
                   <DropdownMenuSeparator />
                   <DropdownMenuItem asChild><Link href="/login/donor">Donor Login</Link></DropdownMenuItem>
                   <DropdownMenuItem asChild><Link href="/login/patient">Patient Login</Link></DropdownMenuItem>
-                  <DropdownMenuItem asChild><Link href="/login/admin">Admin Login</Link></DropdownMenuItem>
                   <DropdownMenuSeparator />
                   <DropdownMenuItem asChild><Link href="/register/donor">Donor Sign Up</Link></DropdownMenuItem>
                   <DropdownMenuItem asChild><Link href="/register/patient">Patient Sign Up</Link></DropdownMenuItem>
