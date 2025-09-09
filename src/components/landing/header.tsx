@@ -16,10 +16,12 @@ import { toast } from "sonner";
 import { auth } from "@/lib/firebase";
 import { onAuthStateChanged, signOut, User as FirebaseUser } from "firebase/auth";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
+import { useRouter } from "next/navigation";
 
 
 export default function Header() {
   const [user, setUser] = React.useState<FirebaseUser | null>(null);
+  const router = useRouter();
 
   React.useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
@@ -31,6 +33,7 @@ export default function Header() {
   const handleLogout = async () => {
     try {
       await signOut(auth);
+      router.push('/');
       toast.error("You have been logged out.");
     } catch (error: any) {
       toast.error(error.message);

@@ -6,11 +6,11 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { auth } from "@/lib/firebase";
-import { signInWithEmailAndPassword } from "firebase/auth";
+import { onAuthStateChanged, signInWithEmailAndPassword } from "firebase/auth";
 import { Home } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { toast } from "sonner";
 
 export default function LoginPage() {
@@ -18,11 +18,20 @@ export default function LoginPage() {
   const [password, setPassword] = useState('');
   const router = useRouter();
 
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      if (user) {
+        router.push('/');
+      }
+    });
+    return () => unsubscribe();
+  }, [router]);
+
   const handleLogin = async () => {
     try {
       await signInWithEmailAndPassword(auth, email, password);
-      toast.success("Logged in successfully!");
       router.push("/");
+      toast.success("Logged in successfully!");
     } catch (error: any) {
       console.error("Login Error:", error);
       if (error.code === 'auth/invalid-credential') {
