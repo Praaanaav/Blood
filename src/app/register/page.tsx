@@ -22,7 +22,7 @@ export default function RegisterPage() {
   const router = useRouter();
 
   const actionCodeSettings = {
-    url: `${process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:9002'}/register`,
+    url: typeof window !== 'undefined' ? `${window.location.origin}/register` : 'http://localhost:9002/register',
     handleCodeInApp: true,
   };
   
@@ -39,34 +39,38 @@ export default function RegisterPage() {
             }
 
             try {
+                // The link contains the user's email, so we can sign them in.
                 const userCredential = await signInWithEmailLink(auth, savedEmail, window.location.href);
+                
+                // At this point, the user is signed in, but their account is temporary.
+                // We need to finalize it by creating a permanent account with a password.
                 if (userCredential.user) {
                     const savedPassword = window.localStorage.getItem('passwordForSignIn');
-                    const savedName = window.localStorage.getItem('nameForSignIn');
                     
                     if (savedPassword) {
-                        // This is a simplified approach. In a real app, you would upgrade the anonymous user.
-                        // For this flow, we create a new user with the verified email.
-                        // This requires deleting the temp user and creating a new one with password.
+                        // First, delete the temporary user created by signInWithEmailLink.
                         await userCredential.user.delete();
-                        const finalUserCredential = await createUserWithEmailAndPassword(auth, savedEmail, savedPassword);
-                        await fetch('/api/assign-role', {
-                          method: 'POST',
-                          headers: { 'Content-Type': 'application/json' },
-                          body: JSON.stringify({ uid: finalUserCredential.user.uid, role: 'donor' }),
-                        });
                         
-                        toast.success("Account created successfully!");
+                        // Now, create the permanent user with the verified email and the saved password.
+                        const finalUserCredential = await createUserWithEmailAndPassword(auth, savedEmail, savedPassword);
+                        
+                        // Clean up localStorage
                         window.localStorage.removeItem('emailForSignIn');
                         window.localStorage.removeItem('passwordForSignIn');
-                        window.localStorage.removeItem('nameForSignIn');
-                        router.push("/");
+
+                        toast.success("Account created successfully! You can now log in.");
+                        router.push("/login");
+                    } else {
+                        throw new Error("Password not found. Please restart the registration process.");
                     }
                 }
             } catch (error: any) {
                 console.error("Verification Error:", error);
-                toast.error(error.message);
+                toast.error(error.message || "An error occurred during verification.");
                 setIsVerifying(false);
+                 window.localStorage.removeItem('emailForSignIn');
+                 window.localStorage.removeItem('passwordForSignIn');
+                router.push('/register');
             }
         }
     };
@@ -75,12 +79,17 @@ export default function RegisterPage() {
 
 
   const handleSendVerification = async () => {
+    if (!name || !email || !password) {
+      toast.error("Please fill in all fields.");
+      return;
+    }
     try {
         await sendSignInLinkToEmail(auth, email, actionCodeSettings);
+        // NOTE: Storing sensitive data like a password in localStorage is not recommended for production apps.
+        // This is a simplified flow. For a real app, consider using server-side sessions or more secure storage.
         window.localStorage.setItem('emailForSignIn', email);
-        window.localStorage.setItem('passwordForSignIn', password); // Note: Storing password in local storage is not recommended for production
-        window.localStorage.setItem('nameForSignIn', name);
-        toast.info("Verification link sent! Please check your email.");
+        window.localStorage.setItem('passwordForSignIn', password); 
+        toast.info("Verification link sent! Please check your email to complete registration.");
         setStep(2);
     } catch (error: any) {
         console.error("Registration Error:", error);
@@ -104,7 +113,7 @@ export default function RegisterPage() {
           <div className="flex justify-end mb-4">
             <Button asChild variant="outline">
               <Link href="/">
-                <Home className="mr-2" />
+                <Home className="mr-2 h-4 w-4" />
                 Back to Home
               </Link>
             </Button>
@@ -151,7 +160,7 @@ export default function RegisterPage() {
                 </CardHeader>
                 <CardContent>
                     <p className="text-sm text-center text-muted-foreground">
-                        You can close this window.
+                        You can close this window. After verification, you can log in.
                     </p>
                 </CardContent>
               </>

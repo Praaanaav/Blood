@@ -21,8 +21,9 @@ export default function LoginPage() {
   const handleLogin = async () => {
     try {
       const userCredential = await signInWithEmailAndPassword(auth, email, password);
+      // The new registration flow ensures the email is verified before account creation.
+      // So this check is now for older accounts or edge cases.
       if (!userCredential.user.emailVerified) {
-        // This check is good practice, though our new flow ensures verification.
         toast.error("Email not verified. Please check your inbox for the verification link.");
         return;
       }
@@ -45,7 +46,7 @@ export default function LoginPage() {
             <div className="flex justify-end mb-4">
               <Button asChild variant="outline">
                 <Link href="/">
-                  <Home className="mr-2" />
+                  <Home className="mr-2 h-4 w-4" />
                   Back to Home
                 </Link>
               </Button>
