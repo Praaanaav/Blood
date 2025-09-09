@@ -1,41 +1,40 @@
 'use client'
 
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 import { auth } from "@/lib/firebase";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { Home, Loader2 } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { toast } from "sonner";
 
 export default function AdminLoginPage() {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
-  const [isLoading, setIsLoading] = useState(true);
 
-  useEffect(() => {
-    const loginAdmin = async () => {
-      try {
-        // NOTE: This is insecure for a production environment.
-        // The admin user should be created in the Firebase console first.
-        await signInWithEmailAndPassword(auth, "admin@example.com", "password");
-        toast.success("Logged in successfully as admin!");
-        router.push("/dashboard");
-      } catch (error: any) {
-        // If the admin user doesn't exist, we can't log in.
-        if (error.code === 'auth/user-not-found' || error.code === 'auth/wrong-password' || error.code === 'auth/invalid-credential') {
-            toast.error("Admin account not found or password incorrect. Please create 'admin@example.com' in your Firebase console.");
-        } else {
-            toast.error(error.message);
-        }
-        console.error("Admin Login Error:", error);
-        setIsLoading(false);
+  const handleLogin = async () => {
+    setIsLoading(true);
+    try {
+      await signInWithEmailAndPassword(auth, email, password);
+      toast.success("Logged in successfully as admin!");
+      router.push("/dashboard");
+    } catch (error: any) {
+      if (error.code === 'auth/user-not-found' || error.code === 'auth/wrong-password' || error.code === 'auth/invalid-credential') {
+        toast.error("Invalid credentials. Please check your email and password.");
+      } else {
+        toast.error(error.message);
       }
-    };
-
-    loginAdmin();
-  }, [router]);
+      console.error("Admin Login Error:", error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   return (
     <div className="flex flex-col min-h-screen bg-background">
@@ -52,22 +51,23 @@ export default function AdminLoginPage() {
           <Card>
             <CardHeader className="space-y-1 text-center">
               <CardTitle className="text-2xl">Admin Login</CardTitle>
-              <CardDescription>
-                {isLoading ? "Attempting to log in automatically..." : "Automatic login failed."}
-              </CardDescription>
+              <CardDescription>Enter your administrator credentials to continue.</CardDescription>
             </CardHeader>
-            <CardContent className="flex justify-center items-center p-6">
-              {isLoading ? (
-                <div className="flex items-center gap-2">
-                    <Loader2 className="h-6 w-6 animate-spin" />
-                    <span>Signing in...</span>
-                </div>
-              ) : (
-                <p className="text-destructive text-center">
-                  Please ensure an admin account with the email 'admin@example.com' exists in your Firebase project.
-                </p>
-              )}
+            <CardContent className="space-y-4">
+              <div className="space-y-2">
+                <Label htmlFor="email">Email</Label>
+                <Input id="email" type="email" placeholder="admin@example.com" value={email} onChange={(e) => setEmail(e.target.value)} disabled={isLoading} />
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="password">Password</Label>
+                <Input id="password" type="password" value={password} onChange={(e) => setPassword(e.target.value)} disabled={isLoading} />
+              </div>
             </CardContent>
+            <CardFooter className="flex flex-col gap-4">
+              <Button className="w-full" onClick={handleLogin} disabled={isLoading}>
+                {isLoading ? <Loader2 className="animate-spin" /> : 'Login'}
+              </Button>
+            </CardFooter>
           </Card>
         </div>
       </div>
