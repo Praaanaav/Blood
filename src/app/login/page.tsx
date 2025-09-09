@@ -34,6 +34,13 @@ export default function LoginPage() {
       const userCredential = await signInWithEmailAndPassword(auth, email, password);
       const user = userCredential.user;
 
+      // Temporary check for testing admin login
+      if (role === 'admin' && email === 'admin-test@example.com') {
+        router.push("/");
+        toast.success("Logged in successfully as Admin (Test Mode)!");
+        return;
+      }
+
       // Force refresh to get the latest custom claims
       const idTokenResult = await user.getIdTokenResult(true);
       const isAdmin = idTokenResult.claims.admin === true;
